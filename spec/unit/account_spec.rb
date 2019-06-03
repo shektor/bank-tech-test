@@ -17,4 +17,18 @@ describe Account do
       }.from(new_balance).to(amount)
     end
   end
+
+  describe '#withdraw' do
+    it 'decreases balance by amount' do
+      put_amount = 1000.00
+      updated_balance = new_balance + put_amount
+      take_amount = 400.00
+      final_balance = updated_balance - take_amount
+
+      subject.deposit(put_amount)
+      expect { subject.withdraw(take_amount) }.to change {
+        subject.balance
+      }.from(updated_balance).to(final_balance)
+    end
+  end
 end

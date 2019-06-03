@@ -13,9 +13,17 @@ class Account
     credit(amount)
   end
 
+  def withdraw(amount)
+    debit(amount)
+  end
+
   private
 
   def credit(amount)
     @balance += amount
+  end
+
+  def debit(amount)
+    @balance -= amount
   end
 end
