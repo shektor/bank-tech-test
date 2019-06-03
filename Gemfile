@@ -1,4 +1,11 @@
 # frozen_string_literal: true
 
-gem 'rspec', '~> 3.8'
-gem 'rubocop', '~> 0.70.0'
+source 'https://rubygems.org'
+
+ruby '2.6.0'
+
+group :test, :development do
+  gem 'rspec'
+  gem 'rubocop'
+  gem 'simplecov', require: false
+end
