@@ -14,6 +14,8 @@ class Account
   end
 
   def withdraw(amount)
+    raise 'Insufficient funds' if debit_invalid?(amount)
+
     debit(amount)
   end
 
@@ -25,5 +27,9 @@ class Account
 
   def debit(amount)
     @balance -= amount
+  end
+
+  def debit_invalid?(amount)
+    (@balance - amount).negative?
   end
 end
