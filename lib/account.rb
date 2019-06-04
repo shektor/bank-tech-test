@@ -9,11 +9,11 @@ class Account
     @balance = NEW_BALANCE
   end
 
-  def deposit(amount)
+  def deposit(amount, date)
     credit(amount)
   end
 
-  def withdraw(amount)
+  def withdraw(amount, date)
     raise 'Insufficient funds' if debit_invalid?(amount)
 
     debit(amount)
