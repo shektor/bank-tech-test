@@ -8,11 +8,11 @@ describe TransactionStatement do
            date: '10-01-2012',
            balance: 1.0
   end
+  let(:log) { [transaction] }
 
   describe '#print' do
     it 'outputs log entries to console' do
-      log = [transaction]
-      expect{ subject.print(log) }.to output("date || credit || debit || balance\n10-01-2012 || 1.0 || 0.0 || 1.0\n").to_stdout
+      expect{ subject.print(log) }.to output("date || credit || debit || balance\n10-01-2012 || 1.00 ||  || 1.00\n").to_stdout
     end
   end
 end
