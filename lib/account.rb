@@ -5,18 +5,21 @@ class Account
 
   attr_reader :balance
 
-  def initialize
+  def initialize(transaction_log = TransactionLog.new)
     @balance = NEW_BALANCE
+    @transaction_log = transaction_log
   end
 
   def deposit(amount, date)
     credit(amount)
+    @transaction_log.store(amount, 0.0, date, @balance)
   end
 
   def withdraw(amount, date)
     raise 'Insufficient funds' if debit_invalid?(amount)
 
     debit(amount)
+    @transaction_log.store(0.0, amount, date, @balance)
   end
 
   def statement

@@ -4,6 +4,7 @@ require 'account'
 
 describe 'Client withdraw' do
   let(:new_balance) { Account::NEW_BALANCE }
+  let(:transaction_log) { :transaction_log }
 
   context 'account balance is greater than withdrawal' do
     it 'can withdraw money from an account' do
@@ -11,9 +12,17 @@ describe 'Client withdraw' do
       available_amount = 400.00
       balance = (new_balance + amount) - available_amount
 
+      date = '14-01-2012'
+      transaction = {
+        credit: 0.0,
+        debit: available_amount,
+        date: date,
+        balance: balance
+      }
+
       account = Account.new
       account.deposit(amount, '10-01-2012')
-      expect(account.withdraw(available_amount, '14-01-2012')).to eq balance
+      expect(account.withdraw(available_amount, date)).to eq transaction
     end
   end
 
