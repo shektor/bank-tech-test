@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TransactionStatement
   HEADER_STRING = "date || credit || debit || balance\n"
 
@@ -12,20 +14,23 @@ class TransactionStatement
   private
 
   def stringify(log)
-    combined_string = @header
-    log.each { |transaction| combined_string += format(transaction) }
-    combined_string
+    statement_array = [@header]
+    log.reverse.each { |transaction| statement_array.push(format_each(transaction)) }
+    statement_array.join
   end
 
-  def format(transaction)
-    string = "#{transaction.date} || "
-    string += "#{two_dp_or_blank(transaction.credit)} || "
-    string += "#{two_dp_or_blank(transaction.debit)} || "
-    string += "#{two_dp_or_blank(transaction.balance)}\n"
+  def format_each(transaction)
+    string = [
+      "#{transaction.date} || ",
+      "#{two_dp_or_blank(transaction.credit)} || ",
+      "#{two_dp_or_blank(transaction.debit)} || ",
+      "#{two_dp_or_blank(transaction.balance)}\n"
+    ].join
   end
 
   def two_dp_or_blank(value)
     return '' if value.zero?
-    '%.2f' % value
+
+    format('%.2f', value)
   end
 end
