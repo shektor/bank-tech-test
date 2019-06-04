@@ -1,18 +1,14 @@
 class TransactionLog
 
-  attr_reader :log
+  attr_reader :log, :transaction
 
-  def initialize
+  def initialize(transaction = Transaction)
     @log = []
+    @transaction = transaction
   end
 
   def store(credit, debit, date, balance)
-    transaction = {
-      credit: credit,
-      debit: debit,
-      date: date,
-      balance: balance
-    }
+    transaction = @transaction.new(credit, debit, date, balance)
     @log.push(transaction)
     transaction
   end

@@ -12,17 +12,11 @@ describe 'Client withdraw' do
       available_amount = 400.00
       balance = (new_balance + amount) - available_amount
 
-      date = '14-01-2012'
-      transaction = {
-        credit: 0.0,
-        debit: available_amount,
-        date: date,
-        balance: balance
-      }
-
       account = Account.new
       account.deposit(amount, '10-01-2012')
-      expect(account.withdraw(available_amount, date)).to eq transaction
+      transaction = account.withdraw(available_amount, '14-01-2012')
+      expect(transaction).to be_instance_of(Transaction)
+      expect(transaction).to have_attributes(credit: 0.0, debit: available_amount, date: '14-01-2012', balance: balance)
     end
   end
 
