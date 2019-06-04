@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'transaction_log'
 
 describe TransactionLog do
@@ -6,12 +8,13 @@ describe TransactionLog do
   let(:date) { '10-01-2012' }
   let(:balance) { 1000.00 }
 
-  let(:transaction) { double :transaction,
-    redit: credit,
-    debit: debit,
-    date: date,
-    balance: balance
-  }
+  let(:transaction) do
+    double :transaction,
+           redit: credit,
+           debit: debit,
+           date: date,
+           balance: balance
+  end
   let(:transaction_class) { double :transaction_class, new: transaction }
   let(:subject) { described_class.new(transaction_class) }
 

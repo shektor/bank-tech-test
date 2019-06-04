@@ -24,6 +24,7 @@ describe Account do
 
     it 'calls store on transaction log with credit amount' do
       amount = 1000.00
+
       expect(transaction_log).to receive(:store).with(amount, 0.0, date, amount)
       subject.deposit(amount, date)
     end
@@ -32,30 +33,24 @@ describe Account do
   describe '#withdraw' do
     context 'amount available to withdraw' do
       it 'decreases balance by amount' do
-        amount = 1000.00
-        updated_balance = new_balance + amount
-        available_amount = 400.00
-        final_balance = updated_balance - available_amount
+        subject.deposit(1000.00, date)
 
-        subject.deposit(amount, date)
-
-        expect { subject.withdraw(available_amount, date) }.to change {
+        expect { subject.withdraw(400.00, date) }.to change {
           subject.balance
-        }.from(updated_balance).to(final_balance)
+        }.from(1000.0).to(600.0)
       end
     end
 
     context 'amount unavailable to withdraw' do
       it 'returns an error' do
-        into_negative = new_balance - new_balance + 1.00
-
-        expect { subject.withdraw(into_negative, date) }.to raise_error('Insufficient funds')
+        expect { subject.withdraw(1.00, date) }.to raise_error('Insufficient funds')
       end
     end
 
     it 'calls store on transaction log with debit amount' do
       amount = 1000.00
       subject.deposit(amount, date)
+
       expect(transaction_log).to receive(:store).with(0.0, amount, date, 0.0)
       subject.withdraw(amount, date)
     end

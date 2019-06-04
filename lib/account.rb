@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Account
-  NEW_BALANCE = 0
+  NEW_BALANCE = 0.0
 
   attr_reader :balance
 
@@ -16,7 +16,7 @@ class Account
   end
 
   def withdraw(amount, date)
-    raise 'Insufficient funds' if debit_invalid?(amount)
+    raise 'Insufficient funds' if balance_less(amount).negative?
 
     debit(amount)
     @transaction_log.store(0.0, amount, date, @balance)
@@ -24,9 +24,9 @@ class Account
 
   def statement
     string = 'date || credit || debit || balance ||'
-      + '14/01/2012 || || 500.00 || 2500.00'
-      + '13/01/2012 || 2000.00 || || 3000.00'
-      + '10/01/2012 || 1000.00 || || 1000.00'
+    + '14/01/2012 || || 500.00 || 2500.00'
+    + '13/01/2012 || 2000.00 || || 3000.00'
+    + '10/01/2012 || 1000.00 || || 1000.00'
     string
   end
 
@@ -40,7 +40,7 @@ class Account
     @balance -= amount
   end
 
-  def debit_invalid?(amount)
-    (@balance - amount).negative?
+  def balance_less(amount)
+    @balance - amount
   end
 end

@@ -1,6 +1,7 @@
-class TransactionLog
+# frozen_string_literal: true
 
-  attr_reader :log, :transaction
+class TransactionLog
+  attr_reader :log
 
   def initialize(transaction = Transaction)
     @log = []
