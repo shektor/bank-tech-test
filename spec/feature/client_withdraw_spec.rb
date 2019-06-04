@@ -12,16 +12,17 @@ describe 'Client withdraw' do
       balance = (new_balance + amount) - available_amount
 
       account = Account.new
-      account.deposit(amount)
-      expect(account.withdraw(available_amount)).to eq balance
+      account.deposit(amount, '10-01-2012')
+      expect(account.withdraw(available_amount, '14-01-2012')).to eq balance
     end
   end
 
   context 'account balance is less than withdrawal' do
     it 'errors and cannot withdraw from account' do
-      account = Account.new
       into_negative = new_balance - new_balance + 1.00
-      expect { account.withdraw(into_negative) }.to raise_error('Insufficient funds')
+
+      account = Account.new
+      expect { account.withdraw(into_negative, '14-01-2012') }.to raise_error('Insufficient funds')
     end
   end
 end
