@@ -8,19 +8,13 @@ describe TransactionLog do
   let(:date) { '10-01-2012' }
   let(:balance) { 1000.00 }
 
-  let(:transaction) do
-    double :transaction,
-           credit: credit,
-           debit: debit,
-           date: date,
-           balance: balance
-  end
+  let(:transaction) { double :transaction }
   let(:transaction_class) { double :transaction_class, new: transaction }
   let(:subject) { described_class.new(transaction_class) }
 
   describe '#store' do
     it 'creates a new transaction' do
-      expect(transaction_class).to receive(:new).with(credit, debit, date, balance)
+      expect(transaction_class).to receive(:new).with(credit, debit, date, balance).and_return(transaction)
       subject.store(credit, debit, date, balance)
     end
 
@@ -29,7 +23,7 @@ describe TransactionLog do
       expect(subject.log).to include(transaction)
     end
 
-    it 'returns a transaction' do
+    it 'returns created transaction' do
       expect(subject.store(credit, debit, date, balance)).to eq transaction
     end
   end
