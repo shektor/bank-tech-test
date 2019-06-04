@@ -8,11 +8,6 @@ describe 'Client statement' do
     account.deposit(1000.00, '10-01-2012')
     account.deposit(2000.00, '13-01-2012')
     account.withdraw(500.00, '14-01-2012')
-
-    statement_string = 'date || credit || debit || balance ||'
-    + '14/01/2012 || || 500.00 || 2500.00'
-    + '13/01/2012 || 2000.00 || || 3000.00'
-    + '10/01/2012 || 1000.00 || || 1000.00'
-    expect(account.statement).to eq statement_string
+    expect{ account.statement }.to output("date || credit || debit || balance\n10-01-2012 || 1000.0 || 0.0 || 1000.0\n13-01-2012 || 2000.0 || 0.0 || 3000.0\n14-01-2012 || 0.0 || 500.0 || 2500.0\n").to_stdout
   end
 end

@@ -5,9 +5,10 @@ class Account
 
   attr_reader :balance
 
-  def initialize(transaction_log = TransactionLog.new)
+  def initialize(transaction_log = TransactionLog.new, transaction_statement = TransactionStatement.new)
     @balance = NEW_BALANCE
     @transaction_log = transaction_log
+    @transaction_statement = transaction_statement
   end
 
   def deposit(amount, date)
@@ -23,11 +24,7 @@ class Account
   end
 
   def statement
-    string = 'date || credit || debit || balance ||'
-    + '14/01/2012 || || 500.00 || 2500.00'
-    + '13/01/2012 || 2000.00 || || 3000.00'
-    + '10/01/2012 || 1000.00 || || 1000.00'
-    string
+    @transaction_statement.print(@transaction_log.log)
   end
 
   private

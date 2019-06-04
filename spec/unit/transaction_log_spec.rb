@@ -10,7 +10,7 @@ describe TransactionLog do
 
   let(:transaction) do
     double :transaction,
-           redit: credit,
+           credit: credit,
            debit: debit,
            date: date,
            balance: balance
