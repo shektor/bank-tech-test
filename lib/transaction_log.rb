@@ -7,11 +7,13 @@ class TransactionLog
   end
 
   def store(credit, debit, date, balance)
-    @log.push({
+    transaction = {
       credit: credit,
       debit: debit,
       date: date,
       balance: balance
-    })
+    }
+    @log.push(transaction)
+    transaction
   end
 end
