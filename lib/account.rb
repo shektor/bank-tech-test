@@ -5,7 +5,10 @@ class Account
 
   attr_reader :balance
 
-  def initialize(transaction_log = TransactionLog.new, transaction_statement = TransactionStatement.new)
+  def initialize(
+    transaction_log = TransactionLog.new,
+    transaction_statement = TransactionStatement.new
+  )
     @balance = NEW_BALANCE
     @transaction_log = transaction_log
     @transaction_statement = transaction_statement

@@ -15,12 +15,14 @@ class TransactionStatement
 
   def stringify(log)
     statement_array = [@header]
-    log.reverse.each { |transaction| statement_array.push(format_each(transaction)) }
+    log.reverse.each do |transaction|
+      statement_array.push(format_each(transaction))
+    end
     statement_array.join
   end
 
   def format_each(transaction)
-    string = [
+    [
       "#{transaction.date} || ",
       "#{two_dp_or_blank(transaction.credit)} || ",
       "#{two_dp_or_blank(transaction.debit)} || ",
